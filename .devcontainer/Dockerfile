@@ -35,6 +35,7 @@ RUN apt-get -y install --no-install-recommends \
     vim \
     nano \
     sudo \
+    openssh-client \
     #
     # Clean up
     && apt-get autoremove -y \
