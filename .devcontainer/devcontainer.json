@@ -1,0 +1,58 @@
+{
+    "name": "Ruby on Rails with Vue.js + PostgreSQL",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    // Features to add to the dev container. More info: https://containers.dev/features.
+    "features": {
+        // "ghcr.io/devcontainers/features/git:1": {},
+        // "ghcr.io/devcontainers/features/github-cli:1": {}
+    },
+    // Configure tool-specific properties.
+    "customizations": {
+        // Configure properties specific to VS Code.
+        "vscode": {
+            // Set *default* container specific settings.json values on container create.
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "bash",
+                "terminal.integrated.profiles.linux": {
+                    "bash": {
+                        "path": "/bin/bash",
+                        "args": [
+                            "-l"
+                        ]
+                    }
+                },
+            },
+            // Add the IDs of extensions you want installed when the container is created.
+            "extensions": [
+                "ms-vscode.vscode-typescript-next",
+                "esbenp.prettier-vscode",
+                "formulahendry.auto-rename-tag",
+                "ms-vscode.vscode-json",
+                "redhat.vscode-yaml",
+                "ms-vscode.vscode-postgresql",
+            ]
+        }
+    },
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    "forwardPorts": [
+        3000,
+        3001,
+        5432,
+        8080,
+        5173
+    ],
+    // Use 'postCreateCommand' to verify development environment is ready
+    "postCreateCommand": "bash -l -c 'echo \"🔍 Verifying development environment...\" && echo \"Node.js: $(node --version)\" && sudo service postgresql start && sleep 2 && echo \"PostgreSQL: Service started\" && echo \"✅ Environment ready! Database: postgresql://vscode:password@localhost/vscode\"'",
+    // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+    "remoteUser": "vscode",
+    // Set environment variables
+    "remoteEnv": {
+        "PATH": "/home/vscode/.rvm/bin:${containerEnv:PATH}",
+        "DATABASE_URL": "postgresql://vscode:password@localhost/vscode"
+    },
+    // Mount the workspace folder
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+    "workspaceFolder": "/workspace"
+}
