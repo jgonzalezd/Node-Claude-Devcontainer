@@ -1,2 +1,8 @@
 # Run in terminal
 npm install -g @anthropic-ai/claude-code
+
+# Install Task master MCP in CLI
+claude mcp add taskmaster npx task-master-ai
+
+# Install Context7 MCP 
+claude mcp add --transport sse context7 https://mcp.context7.com/sse

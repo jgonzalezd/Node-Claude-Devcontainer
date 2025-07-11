@@ -1,5 +1,5 @@
 {
-    "name": "Ruby on Rails with Vue.js + PostgreSQL",
+    "name": "Node.js + PostgreSQL",
     "build": {
         "dockerfile": "Dockerfile"
     },
@@ -44,7 +44,7 @@
         5173
     ],
     // Use 'postCreateCommand' to verify development environment is ready
-    "postCreateCommand": "bash -l -c 'echo \"🔍 Verifying development environment...\" && echo \"Node.js: $(node --version)\" && sudo service postgresql start && sleep 2 && echo \"PostgreSQL: Service started\" && echo \"✅ Environment ready! Database: postgresql://vscode:password@localhost/vscode\"'",
+    "postCreateCommand": "bash -l -c 'echo \"🔍 Verifying development environment...\" && echo \"Node.js: $(node --version)\" && sudo service postgresql start && sleep 2 && echo \"PostgreSQL: Service started\" && echo \"Installing Claude Code CLI and MCPs...\" && npm install -g @anthropic-ai/claude-code && npm install -g task-master-ai@latest && claude mcp add taskmaster \"$(which task-master-ai)\" && claude mcp add --transport sse context7 https://mcp.context7.com/sse && echo \"Claude Code CLI: $(claude --version)\" && echo \"✅ Environment ready! Database: postgresql://vscode:password@localhost/vscode\"'",
     // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
     "remoteUser": "vscode",
     // Set environment variables

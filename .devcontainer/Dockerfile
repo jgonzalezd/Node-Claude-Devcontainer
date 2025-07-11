@@ -67,7 +67,7 @@ WORKDIR /home/$USERNAME
 
 # Install NVM
 ENV NVM_DIR=/home/$USERNAME/.nvm
-ENV NODE_VERSION=18.19.0
+ENV NODE_VERSION=20.18.1
 
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash \
     && . $NVM_DIR/nvm.sh \
