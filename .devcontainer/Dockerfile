@@ -41,14 +41,6 @@ RUN apt-get -y install --no-install-recommends \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Node.js 18 (LTS) for VueJS
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
-    && apt-get install -y nodejs
-
-# Configure npm to use user directory for global packages
-RUN npm config set prefix ~/.npm-global \
-    && echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.bashrc
-
 # Create a non-root user
 ARG USERNAME=vscode
 ARG USER_UID=1000
@@ -72,6 +64,21 @@ RUN service postgresql start \
 # Switch to non-root user
 USER $USERNAME
 WORKDIR /home/$USERNAME
+
+# Install NVM
+ENV NVM_DIR=/home/$USERNAME/.nvm
+ENV NODE_VERSION=18.19.0
+
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash \
+    && . $NVM_DIR/nvm.sh \
+    && nvm install $NODE_VERSION \
+    && nvm alias default $NODE_VERSION \
+    && nvm use default
+
+# Add NVM to bash profile
+RUN echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc \
+    && echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.bashrc \
+    && echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> ~/.bashrc
 
 # Create startup script with PostgreSQL version awareness
 RUN echo '#!/bin/bash' > /home/vscode/start-services.sh \

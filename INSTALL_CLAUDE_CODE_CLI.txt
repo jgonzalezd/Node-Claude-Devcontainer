@@ -1,0 +1,2 @@
+# Run in terminal
+npm install -g @anthropic-ai/claude-code
